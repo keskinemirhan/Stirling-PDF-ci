@@ -20,24 +20,25 @@ pipeline {
             steps {
                 script {
                     def appVersion = sh(returnStdout: true, script: './gradlew printVersion -q').trim()
-                    def image = "frooodle/s-pdf:$appVersion"
+                    def image = "tsmonger/s-pdf:$appVersion"
                     withCredentials([string(credentialsId: 'docker_hub_access_token', variable: 'DOCKER_HUB_ACCESS_TOKEN')]) {
-				        sh "docker login --username frooodle --password $DOCKER_HUB_ACCESS_TOKEN"
+                        sh "docker login --username tsmonger --password $DOCKER_HUB_ACCESS_TOKEN"
                         sh "docker push $image"
                     }
                 }
             }
         }
-        stage('Helm Push') {
+        stage('SSH Deploy') {
             steps {
                 script {
-                    //TODO: Read chartVersion from Chart.yaml
-                    def chartVersion = '1.0.0'
-                    withCredentials([string(credentialsId: 'docker_hub_access_token', variable: 'DOCKER_HUB_ACCESS_TOKEN')]) {
-				        sh "docker login --username frooodle --password $DOCKER_HUB_ACCESS_TOKEN"
-				        sh "helm package chart/stirling-pdf"
-                        sh "helm push stirling-pdf-chart-1.0.0.tgz oci://registry-1.docker.io/frooodle"
+                    def appVersion = sh(returnStdout: true, script: './gradlew printVersion -q').trim()
+                    def image = "tsmonger/s-pdf:$appVersion"
+                    withCredentials([string(credentialsId: 'ssh_remote_username', variable: 'SSH_USERNAME'),string(credentialsId: 'ssh_remote_addr',variable: 'SSH_ADDR')]) {
+                        sshagent(credentialsId: ['ssh_remote_credentials']) {
+                            sh 'ssh $SSH_USERNAME@$SSH_ADDR docker run -it $image'
+                        }
                     }
+
                 }
             }
         }
