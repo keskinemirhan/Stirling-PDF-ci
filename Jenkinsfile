@@ -28,7 +28,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
         stage('SSH Deploy') {
             steps {
                 script {
