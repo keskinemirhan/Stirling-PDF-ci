@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+      /*  stage('Build') {
             steps {
 				sh 'chmod 755 gradlew'
                 sh './gradlew build'
@@ -16,7 +16,7 @@ pipeline {
                 }
             }
         }
-       /* stage('Docker Push') {
+        stage('Docker Push') {
             steps {
                 script {
                     def appVersion = sh(returnStdout: true, script: './gradlew printVersion -q').trim()
