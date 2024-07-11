@@ -38,7 +38,7 @@ pipeline {
 	            def image = "tsmonger/s-pdf:$appVersion"
 	            withCredentials([string(credentialsId: 'ssh_remote_username', variable: 'SSH_USERNAME'),string(credentialsId: 'ssh_remote_addr',variable: 'SSH_ADDR')]) {
 	                sshagent(credentials: ['ssh_remote_credentials']) {
-	                    sh '''ssh dockerrunner@192.168.1.101 "
+	                    sh '''ssh dockerrunner@192.168.1.101 rbash -c "
                                 if [[ -z \"\\$(sudo docker container ps -q)\" ]]; then
                                 echo \"No Container Running\";
                                 else
@@ -47,7 +47,7 @@ pipeline {
                                 if [[ -z \"\\$(sudo docker container ls -qa)\" ]]; then
                                 echo \"No Container Found\";
                                 else
-                                sudo docker container rm \$(sudo docker container ls -qa);
+                                sudo docker container rm \\$(sudo docker container ls -qa);
                                 fi
                                 if [[ -z \"\\$(sudo docker image ls -q)\" ]]; then
                                 echo \"No Image Found\";
