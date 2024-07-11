@@ -35,7 +35,7 @@ pipeline {
                     def image = "tsmonger/s-pdf:$appVersion"
                     withCredentials([string(credentialsId: 'ssh_remote_username', variable: 'SSH_USERNAME'),string(credentialsId: 'ssh_remote_addr',variable: 'SSH_ADDR')]) {
                         sshagent(credentialsId: ['ssh_remote_credentials']) {
-                            sh 'ssh $SSH_USERNAME@$SSH_ADDR docker run -it $image'
+                            sh 'ssh $SSH_USERNAME@$SSH_ADDR sudo docker run -it $image'
                         }
                     }
 
