@@ -32,7 +32,7 @@ public class SPdfApplicationTest {
     @BeforeEach
     public void setUp() {
         sPdfApplication = new SPdfApplication();
-        sPdfApplication.setServerPortStatic("7070");
+        sPdfApplication.setServerPortStatic("8080");
     }
 
     @Test
@@ -53,11 +53,11 @@ public class SPdfApplicationTest {
 
     @Test
     public void testGetStaticPort() {
-        assertEquals("7070", SPdfApplication.getStaticPort());
+        assertEquals("8080", SPdfApplication.getStaticPort());
     }
 
     @Test
     public void testGetNonStaticPort() {
-        assertEquals("7070", sPdfApplication.getNonStaticPort());
+        assertEquals("8080", sPdfApplication.getNonStaticPort());
     }
 }
