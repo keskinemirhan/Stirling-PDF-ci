@@ -39,20 +39,20 @@ pipeline {
 	            withCredentials([string(credentialsId: 'ssh_remote_username', variable: 'SSH_USERNAME'),string(credentialsId: 'ssh_remote_addr',variable: 'SSH_ADDR')]) {
 	                sshagent(credentials: ['ssh_remote_credentials']) {
 	                    sh '''ssh dockerrunner@192.168.1.101 "
-                                if [[ -z \"\$(sudo docker container ps -q)\" ]]; then
+                                if [[ -z \"\\$(sudo docker container ps -q)\" ]]; then
                                 echo \"No Container Running\";
                                 else
-                                sudo docker kill \$(sudo docker container ps -q);
+                                sudo docker kill \\$(sudo docker container ps -q);
                                 fi
-                                if [[ -z \"\$(sudo docker container ls -qa)\" ]]; then
+                                if [[ -z \"\\$(sudo docker container ls -qa)\" ]]; then
                                 echo \"No Container Found\";
                                 else
                                 sudo docker container rm \$(sudo docker container ls -qa);
                                 fi
-                                if [[ -z \"\$(sudo docker image ls -q)\" ]]; then
+                                if [[ -z \"\\$(sudo docker image ls -q)\" ]]; then
                                 echo \"No Image Found\";
                                 else
-                                sudo docker image rm \$(sudo docker image ls -q);
+                                sudo docker image rm \\$(sudo docker image ls -q);
                                 fi
                                 sudo docker run $image
                                 "'''
