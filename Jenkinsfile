@@ -16,7 +16,7 @@ pipeline {
                 }
             }
         }
-        stage('Docker Push') {
+       /* stage('Docker Push') {
             steps {
                 script {
                     def appVersion = sh(returnStdout: true, script: './gradlew printVersion -q').trim()
@@ -27,7 +27,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('SSH Deploy') {
             steps {
                 script {
