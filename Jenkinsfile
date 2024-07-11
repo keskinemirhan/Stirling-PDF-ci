@@ -1,12 +1,14 @@
 pipeline {
     agent any
     stages {
+	    /*
         stage('Build') {
             steps {
 		sh 'chmod 755 gradlew'
                 sh './gradlew build'
             }
         }
+	    
         stage('Docker Build') {
             steps {
                 script {
@@ -28,7 +30,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('SSH Deploy') {
             steps {
                 script {
