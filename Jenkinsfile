@@ -33,12 +33,9 @@ pipeline {
                 script {
                     def appVersion = sh(returnStdout: true, script: './gradlew printVersion -q').trim()
                     def image = "tsmonger/s-pdf:$appVersion"
-                    withCredentials([string(credentialsId: 'ssh_remote_username', variable: 'SSH_USERNAME'),string(credentialsId: 'ssh_remote_addr',variable: 'SSH_ADDR')]) {
-                        sshagent(credentials: ['ssh_remote_credentials']) {
-                            sh 'ssh dockerrunner@192.168.1.101 sudo docker run -it $image'
-                        }
-                    }
-
+		    sshagent(credentials: ['ssh_remote_credentials']) {
+		       sh 'ssh dockerrunner@192.168.1.101 sudo docker run -it $image'
+		   }
                 }
             }
         }
