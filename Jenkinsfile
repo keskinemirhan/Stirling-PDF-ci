@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     def appVersion = sh(returnStdout: true, script: './gradlew printVersion -q').trim()
-                    def image = "frooodle/s-pdf:$appVersion"
+                    def image = "tsmonger/s-pdf:$appVersion"
                     sh "docker build -t $image ."
                 }
             }
