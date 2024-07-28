@@ -1,5 +1,6 @@
 pipeline {
     agent any
+	/*
     stages {
         stage('Build') {
             steps {
@@ -25,11 +26,10 @@ pipeline {
                     withCredentials([string(credentialsId: 'docker_hub_access_token', variable: 'DOCKER_HUB_ACCESS_TOKEN')]) {
                         sh "docker login --username tsmonger --password $DOCKER_HUB_ACCESS_TOKEN"
                         sh "docker push $image"
-			sh "docker image rm \$(docker image ls -q)"
                     }
                 }
             }
-        }
+        }*/
         stage('SSH Deploy') {
             steps {
                 script {
